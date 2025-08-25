@@ -1,0 +1,6 @@
+services:
+  app:
+    build: ./app
+    container_name: semantic_vue
+    ports:
+      - 9000:8080
