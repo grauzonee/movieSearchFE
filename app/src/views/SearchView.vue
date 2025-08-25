@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import SearchForm from '@/components/SearchForm.vue'
 import MovieBlock from '@/components/MovieBlock.vue'
+import RouterButton from '@/components/RouterButton.vue'
 
 const movies = ref([{ title: 'Tetle', plot: 'Plot', genres: ['drama', 'thriller'] }])
 
@@ -9,11 +10,7 @@ function onMoviesUpdated() {}
 </script>
 <template>
   <div class="w-full flex flex-col items-end">
-    <button
-      class="border border-emerald-400 rounded-md px-2 pointer hover:bg-white hover:text-gray-800 hover:shadow-md"
-    >
-      I want to add my own movie!
-    </button>
+    <RouterButton text="I want to add my own movie!" to="create" />
   </div>
   <h2 class="font-bold text-center my-12 text-4xl w-1/2">
     What kind of movie would you like to watch today?
