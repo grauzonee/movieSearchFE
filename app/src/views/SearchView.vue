@@ -37,16 +37,40 @@ function onError(errorMsg) {
 
     <SearchForm @moviesUpdated="onMoviesUpdated" @isLoading="onIsLoading" @onError="onError" />
     <FormMessage :msg="errorMessage" class="mt-2" />
-    <div class="flex flex-col gap-3 mt-3 overflow-scroll no-scrollbar max-h-[60vh]">
-      <MovieBlock v-for="(movie, key) in movies" :key="key" :movie="movie" />
-      <span
-        v-if="isLoading"
-        class="flex items-center justify-center p-3 h-12 bg-white/10 backdrop-blur-lg animate-pulse rounded-lg shadow-lg shadow-indigo-500/30"
-      >
-        <div
-          class="h-6 w-6 border-2 border-white border-t-transparent rounded-full animate-spin"
-        ></div>
-      </span>
-    </div>
+    <transition-group
+      tag="div"
+      class="flex flex-col gap-3 mt-3 overflow-scroll no-scrollbar max-h-[60vh]"
+      name="movies"
+    >
+      <MovieBlock
+        v-for="(movie, key) in movies"
+        :key="key"
+        :movie="movie"
+        :style="{
+          transitionDelay: `${key * 100}ms`,
+        }"
+      />
+    </transition-group>
+    <span
+      v-if="isLoading"
+      class="flex items-center justify-center p-3 h-12 bg-white/10 backdrop-blur-lg animate-pulse rounded-lg shadow-lg shadow-indigo-500/30"
+    >
+      <div
+        class="h-6 w-6 border-2 border-white border-t-transparent rounded-full animate-spin"
+      ></div>
+    </span>
   </div>
 </template>
+<style scoped>
+.movies.move,
+.movies-enter-active,
+.movies-leave-active {
+  transition: all 0.5s ease;
+}
+
+.movies-enter-from,
+.movies-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+</style>
