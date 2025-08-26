@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import RouterButton from '@/components/RouterButton.vue'
 import TagsForm from '@/components/TagsForm.vue'
 import BaseInput from '@/components/BaseInput.vue'
+import FormMessage from '@/components/FormMessage.vue'
 import { api } from '@/libs/axios.ts'
 
 const movie = ref({ title: '', plot: '', genres: [] as string[] })
@@ -69,31 +70,25 @@ async function createMovie() {
   <div class="w-full flex flex-col items-end">
     <RouterButton text="I want to find a movie!" to="/" />
   </div>
-  <h2 class="font-bold text-center my-12 text-4xl w-1/2 drop-shadow">Please fill all the fields</h2>
-  <div
-    class="bg-white/10 backdrop-blur-lg text-gray-800 rounded-2xl shadow-xl shadow-black/30 w-1/2 px-6 py-10 flex flex-col gap-2"
-  >
+  <div class="w-full md:w-1/2">
+    <h2 class="font-bold text-center my-12 text-4xl w-full drop-shadow">
+      Please fill all the fields
+    </h2>
     <div
-      class="bg-red-500/40 text-white font-bold rounded-md shadow-gray-500/30 shadow-md p-4 mb-3 transition-all delay-300"
-      v-if="errorMessage"
+      class="bg-white/10 backdrop-blur-lg text-gray-800 rounded-2xl shadow-xl shadow-black/30 w-1/2 px-6 py-10 flex flex-col gap-2 w-full"
     >
-      {{ errorMessage }}
+      <FormMessage :msg="errorMessage" />
+      <FormMessage :msg="successMessage" :isSuccess="true" />
+      <BaseInput v-model="movie.title" placeholder="Title..." />
+      <BaseInput placeholder="Plot..." :textarea="true" v-model="movie.plot" />
+      <TagsForm @updateTags="onUpdateTags" @deleteTag="onDeleteTag" :tags="movie.genres" />
+      <button
+        type="submit"
+        @click="createMovie"
+        class="w-full py-3 px-6 rounded-xl font-semibold text-gray-200 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:text-white transition-all duration-300 border border-white/20"
+      >
+        Submit
+      </button>
     </div>
-    <div
-      class="bg-emerald-500/40 text-white font-bold rounded-md shadow-gray-500/30 shadow-md p-4 mb-3 transition-all delay-300"
-      v-if="successMessage"
-    >
-      {{ successMessage }}
-    </div>
-    <BaseInput v-model="movie.title" placeholder="Title..." />
-    <BaseInput placeholder="Plot..." :textarea="true" v-model="movie.plot" />
-    <TagsForm @updateTags="onUpdateTags" @deleteTag="onDeleteTag" :tags="movie.genres" />
-    <button
-      type="submit"
-      @click="createMovie"
-      class="w-full py-3 px-6 rounded-xl font-semibold text-gray-200 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:text-white transition-all duration-300 border border-white/20"
-    >
-      Submit
-    </button>
   </div>
 </template>
