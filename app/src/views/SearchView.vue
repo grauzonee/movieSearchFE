@@ -31,7 +31,7 @@ function onError(errorMsg) {
     <RouterButton text="I want to add my own movie!" to="create" />
   </div>
   <div class="w-full md:w-1/2 overflow-hidden">
-    <h2 class="font-bold text-center my-12 text-4xl">
+    <h2 class="font-bold text-center my-12 text-4xl font-sans">
       What kind of movie would you like to watch today?
     </h2>
 
