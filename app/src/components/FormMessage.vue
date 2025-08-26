@@ -14,7 +14,7 @@ onMounted(() => {
   <div
     :class="
       bgColor +
-      ' text-white font-bold rounded-md shadow-gray-500/30 shadow-md p-4 mb-3 transition-all delay-300'
+      ' text-white font-bold rounded-md shadow-gray-500/30 shadow-md p-4 mb-3 transition-all duration-300'
     "
     v-if="msg"
   >

@@ -4,14 +4,17 @@ import SearchForm from '@/components/SearchForm.vue'
 import MovieBlock from '@/components/MovieBlock.vue'
 import RouterButton from '@/components/RouterButton.vue'
 import FormMessage from '@/components/FormMessage.vue'
+import TypedLine from '@/components/TypedLine.vue'
 
 const movies = ref([])
 const isLoading = ref(false)
 const errorMessage = ref('')
+const doType = ref(true)
 
 function onMoviesUpdated(newMovies) {
   movies.value = newMovies
   isLoading.value = false
+  doType.value = false
 }
 
 function onIsLoading() {
@@ -31,9 +34,11 @@ function onError(errorMsg) {
     <RouterButton text="I want to add my own movie!" to="create" />
   </div>
   <div class="w-full md:w-1/2 overflow-hidden">
-    <h2 class="font-bold text-center my-12 text-4xl font-sans">
-      What kind of movie would you like to watch today?
-    </h2>
+    <TypedLine
+      :doType="doType"
+      class="font-bold text-center my-12 text-4xl font-sans h-24"
+      text="What kind of movie would you like to watch today?"
+    />
 
     <SearchForm @moviesUpdated="onMoviesUpdated" @isLoading="onIsLoading" @onError="onError" />
     <FormMessage :msg="errorMessage" class="mt-2" />
