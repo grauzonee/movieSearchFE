@@ -2,12 +2,10 @@
 import BaseInput from '@/components/BaseInput.vue'
 import { ref } from 'vue'
 
-const currentTag = ref('')
+const currentTag = ref<string>('')
 
 defineProps<{
-  tags: {
-    type: string[]
-  }
+  tags: string[]
 }>()
 const emit = defineEmits(['updateTags', 'deleteTag'])
 
@@ -16,7 +14,8 @@ function onInput() {
   currentTag.value = ''
 }
 
-function onDelete(tag) {
+function onDelete(tag: string) {
+  console.log('Emitted')
   emit('deleteTag', tag)
 }
 </script>

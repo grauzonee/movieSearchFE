@@ -11,14 +11,14 @@ const errorMessage = ref('')
 const successMessage = ref('')
 const currentYear = new Date().getFullYear()
 
-function onUpdateTags(newTag) {
+function onUpdateTags(newTag: string) {
   if (!movie.value.genres.includes(newTag)) {
     movie.value.genres.push(newTag)
   }
 }
 
-function onDeleteTag(tag) {
-  movie.value?.genres.delete(tag)
+function onDeleteTag(tag: string) {
+  movie.value.genres = movie.value.genres.filter((genre) => genre !== tag)
 }
 
 function setError(msg: string) {
@@ -54,7 +54,7 @@ async function createMovie() {
     setError('Please select genres')
     return
   }
-  if (movie.value?.year < 1700 || movie.value?.year > currentYear) {
+  if (!movie.value?.year || movie.value?.year < 1700 || movie.value?.year > currentYear) {
     setError('Please set year')
     return
   }
@@ -72,7 +72,7 @@ async function createMovie() {
   }
 }
 
-function onYearInput(e) {
+function onYearInput(e: KeyboardEvent) {
   const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight']
   if (!/^[0-9]$/.test(e.key) && !allowedKeys.includes(e.key)) {
     e.preventDefault()

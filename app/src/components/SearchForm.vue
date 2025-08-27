@@ -5,10 +5,10 @@ import BaseInput from '@/components/BaseInput.vue'
 
 const emit = defineEmits(['moviesUpdated', 'isLoading', 'onError'])
 
-const value = ref(null)
+const value = ref<string>('')
 
 async function onSubmit() {
-  if (value.value.length < 1) {
+  if (value.value?.length < 1) {
     return
   }
   try {
@@ -22,7 +22,7 @@ async function onSubmit() {
       value.value = ''
     }
   } catch (error) {
-    emit('onError', error.message)
+    emit('onError', error instanceof Error ? error.message : error)
   }
 }
 </script>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const props = withDefaults(defineProps<{ msg: string; isSuccess?: bool }>(), { isSuccess: false })
+const props = withDefaults(defineProps<{ msg: string; isSuccess?: boolean }>(), {
+  isSuccess: false,
+})
 const bgColor = ref('bg-red-500/40')
 
 onMounted(() => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ placeholder: string; textarea?: bool }>(), { textarea: false })
-const model = defineModel<string | number>()
+withDefaults(defineProps<{ placeholder: string; textarea?: boolean }>(), { textarea: false })
+const model = defineModel<string | number | null>()
 </script>
 <template>
   <textarea

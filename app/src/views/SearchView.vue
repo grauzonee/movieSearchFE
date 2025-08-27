@@ -5,13 +5,14 @@ import MovieBlock from '@/components/MovieBlock.vue'
 import RouterButton from '@/components/RouterButton.vue'
 import FormMessage from '@/components/FormMessage.vue'
 import TypedLine from '@/components/TypedLine.vue'
+import type { Movie } from '@/types/Movie.ts'
 
-const movies = ref([])
+const movies = ref<Movie[]>([])
 const isLoading = ref(false)
 const errorMessage = ref('')
 const doType = ref(true)
 
-function onMoviesUpdated(newMovies) {
+function onMoviesUpdated(newMovies: Movie[]) {
   movies.value = newMovies
   isLoading.value = false
   doType.value = false
@@ -22,7 +23,7 @@ function onIsLoading() {
   isLoading.value = true
 }
 
-function onError(errorMsg) {
+function onError(errorMsg: string) {
   errorMessage.value = errorMsg
   setTimeout(() => {
     errorMessage.value = ''
