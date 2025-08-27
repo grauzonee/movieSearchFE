@@ -36,7 +36,7 @@ function onError(errorMsg) {
   <div class="w-full md:w-1/2 overflow-hidden">
     <TypedLine
       :doType="doType"
-      class="font-bold text-center my-12 text-4xl font-sans h-24"
+      class="font-bold text-center my-12 text-4xl font-sans h-[20vh] md:h-24"
       text="What kind of movie would you like to watch today?"
     />
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ placeholder: string; textarea?: bool }>(), { textarea: false })
-const model = defineModel<string>()
+const model = defineModel<string | number>()
 </script>
 <template>
   <textarea
@@ -12,7 +12,7 @@ const model = defineModel<string>()
   <input
     v-else
     v-model="model"
-    class="border border-white/20 bg-white/60 rounded-lg focus:shadow-lg outline-none py-3 px-2 transition-all duration-500"
+    class="w-full border border-white/20 bg-white/60 rounded-lg focus:shadow-lg outline-none py-3 px-2 transition-all duration-500"
     :placeholder="placeholder"
   />
 </template>

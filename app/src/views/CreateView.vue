@@ -6,9 +6,10 @@ import BaseInput from '@/components/BaseInput.vue'
 import FormMessage from '@/components/FormMessage.vue'
 import { api } from '@/libs/axios.ts'
 
-const movie = ref({ title: '', plot: '', genres: [] as string[] })
+const movie = ref({ title: '', plot: '', genres: [] as string[], year: null })
 const errorMessage = ref('')
 const successMessage = ref('')
+const currentYear = new Date().getFullYear()
 
 function onUpdateTags(newTag) {
   if (!movie.value.genres.includes(newTag)) {
@@ -37,6 +38,7 @@ function resetMovie() {
   movie.value.title = ''
   movie.value.plot = ''
   movie.value.genres = []
+  movie.value.year = null
 }
 
 async function createMovie() {
@@ -52,6 +54,10 @@ async function createMovie() {
     setError('Please select genres')
     return
   }
+  if (movie.value?.year < 1700 || movie.value?.year > currentYear) {
+    setError('Please set year')
+    return
+  }
   try {
     const response = await api.post('/api/movies', movie.value)
     if (response.status !== 200) {
@@ -63,6 +69,13 @@ async function createMovie() {
   } catch (error) {
     setError('Something went wrong with the request, please try later')
     console.log('error', error)
+  }
+}
+
+function onYearInput(e) {
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight']
+  if (!/^[0-9]$/.test(e.key) && !allowedKeys.includes(e.key)) {
+    e.preventDefault()
   }
 }
 </script>
@@ -79,7 +92,17 @@ async function createMovie() {
     >
       <FormMessage :msg="errorMessage" />
       <FormMessage :msg="successMessage" :isSuccess="true" />
-      <BaseInput v-model="movie.title" placeholder="Title..." />
+      <div class="flex flex-row gap-2">
+        <BaseInput v-model="movie.title" placeholder="Title..." />
+        <BaseInput
+          v-model="movie.year"
+          placeholder="Year..."
+          type="number"
+          min="1700"
+          :max="currentYear"
+          @keydown="onYearInput"
+        />
+      </div>
       <BaseInput placeholder="Plot..." :textarea="true" v-model="movie.plot" />
       <TagsForm @updateTags="onUpdateTags" @deleteTag="onDeleteTag" :tags="movie.genres" />
       <button
